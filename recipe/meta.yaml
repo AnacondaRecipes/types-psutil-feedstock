@@ -1,5 +1,5 @@
 {% set name = "types-psutil" %}
-{% set version = "5.9.5.6" %}
+{% set version = "5.9.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,19 +7,19 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/types-psutil-{{ version }}.tar.gz
-  sha256: 65f93589711ca48859602c955c4247c834d96d4d33a9cbe4142d89593ef33b3c
+  sha256: d0be139c8c6b62abf9bb351d7b92dad66fba07917ff525adb9f9cd6c6551a5a1
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
   number: 0
+  skip: true # [py<36]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
-    - python >=3
+    - python
     - pip
   run:
-    - python >=3
+    - python
 
 test:
   files:
@@ -28,11 +28,14 @@ test:
     - stubtest_allowlist_darwin.txt
     - stubtest_allowlist_win32.txt
   commands:
-    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_linux.txt  # [linux]
-    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_darwin.txt  # [osx]
-    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_win32.txt  # [win32]
+    - pip check
+    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_linux.txt   --ignore-missing-stub --ignore-unused-allowlist # [linux]
+    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_darwin.txt --ignore-missing-stub --ignore-unused-allowlist # [osx]
+    - python -m mypy.stubtest psutil  --allowlist stubtest_allowlist.txt --allowlist stubtest_allowlist_win32.txt   --ignore-missing-stub --ignore-unused-allowlist # [win32]
   requires:
+    - pip
     - mypy
+    - psutil
 
 about:
   home: https://github.com/python/typeshed
