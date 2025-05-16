@@ -1,25 +1,30 @@
 {% set name = "types-psutil" %}
-{% set version = "5.9.0" %}
+{% set version = "7.0.0.20250401" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/types-psutil-{{ version }}.tar.gz
-  sha256: d0be139c8c6b62abf9bb351d7b92dad66fba07917ff525adb9f9cd6c6551a5a1
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/types_psutil-{{ version }}.tar.gz
+  sha256: 2a7d663c0888a079fc1643ebc109ad12e57a21c9552a9e2035da504191336dbf
 
 build:
   number: 0
-  skip: true # [py<36]
+  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
     - python
     - pip
+    - setuptools >=77.0.3
   run:
     - python
+    - referencing
+  run_constrained:
+    - pytest >=4.6
+    - coverage >=7.5
 
 test:
   commands:
