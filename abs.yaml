@@ -1,2 +1,5 @@
-aggregate_branch: 3.12
-aggregate_check: false
+channels:
+  - ad-testing/label/py314
+
+build_env_vars:
+  ANACONDA_ROCKET_ENABLE_PY314 : yes
