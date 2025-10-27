@@ -1,23 +1,24 @@
 {% set name = "types-psutil" %}
-{% set version = "5.9.0" %}
+{% set version = "7.0.0.20251001" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/types-psutil-{{ version }}.tar.gz
-  sha256: d0be139c8c6b62abf9bb351d7b92dad66fba07917ff525adb9f9cd6c6551a5a1
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: 60d696200ddae28677e7d88cdebd6e960294e85adefbaafe0f6e5d0e7b4c1963
 
 build:
   number: 0
-  skip: true # [py<36]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true # [py<39]
 
 requirements:
   host:
     - python
     - pip
+    - setuptools >=77.0.3
   run:
     - python
 
@@ -30,9 +31,18 @@ test:
 about:
   home: https://github.com/python/typeshed
   summary: Typing stubs for psutil
-  license: Apache-2.0 AND MIT
+  license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
+  description: |
+    This is a type stub package for the psutil package. 
+    It can be used by type checkers to check code that uses psutil. 
+    This version of types-psutil aims to provide accurate annotations for psutil==7.0.*.
+  doc_url: https://github.com/python/typeshed/blob/main/README.md
+  dev_url: https://github.com/python/typeshed
 
 extra:
   recipe-maintainers:
     - mr-c
+  skip-lints:
+    - missing_imports_or_run_test_py
