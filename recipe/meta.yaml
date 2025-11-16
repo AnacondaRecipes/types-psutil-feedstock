@@ -1,5 +1,5 @@
 {% set name = "types-psutil" %}
-{% set version = "7.0.0.20251001" %}
+{% set version = "7.0.0.20251115" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 60d696200ddae28677e7d88cdebd6e960294e85adefbaafe0f6e5d0e7b4c1963
+  sha256: 67db0fbe0f2ed540f9a7d419273086c7d65cbaed8ccc32c8197d12963eedde72
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true # [py<39]
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -35,8 +35,8 @@ about:
   license_family: Apache
   license_file: LICENSE
   description: |
-    This is a type stub package for the psutil package. 
-    It can be used by type checkers to check code that uses psutil. 
+    This is a type stub package for the psutil package.
+    It can be used by type checkers to check code that uses psutil.
     This version of types-psutil aims to provide accurate annotations for psutil==7.0.*.
   doc_url: https://github.com/python/typeshed/blob/main/README.md
   dev_url: https://github.com/python/typeshed
